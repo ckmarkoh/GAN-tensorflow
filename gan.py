@@ -5,7 +5,6 @@ from skimage.io import imsave
 import os
 import shutil
 
-
 img_height = 28
 img_width = 28
 img_size = img_height * img_width
@@ -38,7 +37,7 @@ def build_generator(z_prior):
 
 
 def build_discriminator(x_data, x_generated, keep_prob):
-    x_in = tf.concat(0, [x_data, x_generated])
+    x_in = tf.concat([x_data, x_generated], 0)
     w1 = tf.Variable(tf.truncated_normal([img_size, h2_size], stddev=0.1), name="d_w1", dtype=tf.float32)
     b1 = tf.Variable(tf.zeros([h2_size]), name="d_b1", dtype=tf.float32)
     h1 = tf.nn.dropout(tf.nn.relu(tf.matmul(x_in, w1) + b1), keep_prob)
@@ -106,7 +105,6 @@ def train():
             shutil.rmtree(output_path)
         os.mkdir(output_path)
 
-
     z_sample_val = np.random.normal(0, 1, size=(batch_size, z_size)).astype(np.float32)
 
     for i in range(sess.run(global_step), max_epoch):
@@ -121,10 +119,10 @@ def train():
                 sess.run(g_trainer,
                          feed_dict={x_data: x_value, z_prior: z_value, keep_prob: np.sum(0.7).astype(np.float32)})
         x_gen_val = sess.run(x_generated, feed_dict={z_prior: z_sample_val})
-        show_result(x_gen_val, "output/sample{0}.jpg".format(i))
+        show_result(x_gen_val, os.path.join(output_path, "sample%s.jpg" % i))
         z_random_sample_val = np.random.normal(0, 1, size=(batch_size, z_size)).astype(np.float32)
         x_gen_val = sess.run(x_generated, feed_dict={z_prior: z_random_sample_val})
-        show_result(x_gen_val, "output/random_sample{0}.jpg".format(i))
+        show_result(x_gen_val, os.path.join(output_path, "random_sample%s.jpg" % i))
         sess.run(tf.assign(global_step, i + 1))
         saver.save(sess, os.path.join(output_path, "model"), global_step=global_step)
 
@@ -141,7 +139,7 @@ def test():
     saver.restore(sess, chkpt_fname)
     z_test_value = np.random.normal(0, 1, size=(batch_size, z_size)).astype(np.float32)
     x_gen_val = sess.run(x_generated, feed_dict={z_prior: z_test_value})
-    show_result(x_gen_val, "output/test_result.jpg")
+    show_result(x_gen_val, os.path.join(output_path, "test_result.jpg"))
 
 
 if __name__ == '__main__':
