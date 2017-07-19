@@ -89,7 +89,7 @@ def train():
     d_trainer = optimizer.minimize(d_loss, var_list=d_params)
     g_trainer = optimizer.minimize(g_loss, var_list=g_params)
 
-    init = tf.initialize_all_variables()
+    init = tf.global_variables_initializer()
 
     saver = tf.train.Saver()
 
@@ -132,7 +132,7 @@ def test():
     x_generated, _ = build_generator(z_prior)
     chkpt_fname = tf.train.latest_checkpoint(output_path)
 
-    init = tf.initialize_all_variables()
+    init = tf.global_variables_initializer()
     sess = tf.Session()
     saver = tf.train.Saver()
     sess.run(init)
