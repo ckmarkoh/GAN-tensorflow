@@ -108,8 +108,8 @@ def train():
     z_sample_val = np.random.normal(0, 1, size=(batch_size, z_size)).astype(np.float32)
 
     for i in range(sess.run(global_step), max_epoch):
-        for j in range(60000 / batch_size):
-            print "epoch:%s, iter:%s" % (i, j)
+        for j in range(60000 // batch_size):
+            print("epoch:%s, iter:%s" % (i, j))
             x_value, _ = mnist.train.next_batch(batch_size)
             x_value = 2 * x_value.astype(np.float32) - 1
             z_value = np.random.normal(0, 1, size=(batch_size, z_size)).astype(np.float32)
