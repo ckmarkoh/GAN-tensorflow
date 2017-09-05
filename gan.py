@@ -62,7 +62,7 @@ def build_discriminator(x_data, x_generated, keep_prob):
     b2 = tf.Variable(tf.zeros([h1_size]), name="d_b2", dtype=tf.float32)
     h2 = tf.nn.dropout(tf.nn.relu(tf.matmul(h1, w2) + b2), keep_prob)
 
-    # Fully Connected Layer 3 (150 (h1_size) -> 1) , dropout
+    # Fully Connected Layer 3 (150 (h1_size) -> 1)
     w3 = tf.Variable(tf.truncated_normal([h1_size, 1], stddev=0.1), name="d_w3", dtype=tf.float32)
     b3 = tf.Variable(tf.zeros([1]), name="d_b3", dtype=tf.float32)
     h3 = tf.matmul(h2, w3) + b3
