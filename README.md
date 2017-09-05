@@ -4,17 +4,17 @@
 Implementation of [Generative Adversarial Networks](https://arxiv.org/abs/1406.2661) by Tensorflow, 
 with [phd08](https://www.dropbox.com/s/69cwkkqt4m1xl55/phd08.alz?dl=0)
 
-### Requirements
+## Requirements
 
  - [Tensorflow](http://www.tensorflow.org/)
 
-### Examples
+## Examples
 
-## Change Log
+### Change Log
 
 ![phd08](example/phd08.gif)
 
-## Final Result
+### Final Result
 
 - max_epoch : 500
 
@@ -24,13 +24,13 @@ with [phd08](https://www.dropbox.com/s/69cwkkqt4m1xl55/phd08.alz?dl=0)
 
 ## Run
 
-- train
+### train
 
 ```
 python gan.py
 ```
 
-- test
+### test
 
 > after train, change `to_train` from `True` to `False`
 
